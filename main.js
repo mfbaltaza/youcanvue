@@ -24,10 +24,10 @@ const app = new Vue({
 		github: 'https://github.com/mfbaltaza',
 	},
 	methods: {
-		addToCart: function () {
+		addToCart() {
 			this.cart += 1
 		},
-		updateProduct: function (variantImage) {
+		updateProduct(variantImage) {
 			this.image = variantImage
 		}
 	},

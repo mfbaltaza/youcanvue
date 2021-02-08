@@ -16,6 +16,12 @@
     padding: 1rem;
   }
 
+  .extra {
+    display: flex;
+    flex-flow: wrap;
+    padding: 0 0 0 55px;
+  }
+
   img {
     border: 1px solid #d8d8d8;
     width: 70%;

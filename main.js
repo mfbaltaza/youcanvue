@@ -1,4 +1,10 @@
-Vue.component('details', {
+Vue.component('product-details', {
+	props: {
+		details: {
+			type: Array,
+			required: true
+		}
+	},
 	template: `
 	<ul>
 		<li v-for="detail in details">{{ detail }}</li>
@@ -51,8 +57,6 @@ Vue.component('product', {
               :disabled="!inStock"
               :class="{ disabledButton: !inStock }">Add to cart</button>
 					<button @click="removeFromCart">Remove from the cart</button>
-
-					<div class="cart">Cart({{cart}})</div>
         </div>
       </div>
 
@@ -66,7 +70,7 @@ data() {
 		product: 'Socks',
 		description: 'Very comfortable ones',
 		selectedVariant: 0,
-		onSale: true,
+		onSale: false,
 		details: ["80% cotton", "20% polyester", "Gender-neutral"],
 		variants: [
 			{
@@ -83,7 +87,6 @@ data() {
 			}
 		],
 		sizes: ["S", "M", "L", "XL"],
-		cart: 0,
 		styleObject: {
 			textDecoration: 'line-through',
 		},
@@ -92,10 +95,10 @@ data() {
 },
 	methods: {
 		addToCart() {
-			this.cart += 1
+			this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
 		},
 		removeFromCart() {
-			this.cart -= 1
+			this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId)
 		},
 		updateProduct(index) {
 			this.selectedVariant = index
@@ -130,5 +133,19 @@ const app = new Vue({
 	el: '#app',
 	data: {
 		premium: true,
+		cart: [],
+	},
+	methods: {
+		updateCart(id) {
+			this.cart.push(id)
+		},
+		removeItem(id) {
+			for (var i = this.cart.length -1; i >= 0; i--) {
+				if (this.cart[i] === id) {
+					this.cart.splice(i, 1);
+				}
+				
+			}
+		}
 	}
 });
